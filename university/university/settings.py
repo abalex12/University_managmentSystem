@@ -71,6 +71,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'Users.context_processors.user_role_context',
             ],
         },
     },
@@ -134,6 +135,9 @@ MEDIA_ROOT=os .path.join(BASE_DIR,'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
+
+LOGIN_URL= "Users:sign-in"
+
 AUTH_USER_MODEL = 'Users.User'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

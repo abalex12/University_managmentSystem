@@ -1,6 +1,5 @@
 from django.db import models
 from shortuuid.django_fields import ShortUUIDField
-from django.utils.html import mark_safe
 from django.contrib.auth.models import AbstractUser
 
 ROLE = [
@@ -13,6 +12,7 @@ GENDER = [
     ('Female', 'Female'), 
     ('Other', 'Other') 
 ]
+
 class User(AbstractUser):
     user_id = ShortUUIDField(unique=True, length=10, max_length=20, prefix="User", alphabet="1234567890", primary_key=True)
     email = models.EmailField(max_length=255, unique=True)
@@ -43,7 +43,7 @@ class User(AbstractUser):
 
 class Student(models.Model):
     student_id = ShortUUIDField(length=7, prefix='stu', primary_key=True, alphabet="1234567890")
-    user = models.OneToOneField(User, on_delete=models.CASCADE, editable=False)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"Student: {self.user.username}"
@@ -53,9 +53,9 @@ class Student(models.Model):
 
 class Teacher(models.Model):
     teacher_id = ShortUUIDField(length=7, prefix='tea', primary_key=True, alphabet="1234567890")
-    user = models.OneToOneField(User, on_delete=models.CASCADE, editable=False)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     department = models.ForeignKey('Academics.Department', on_delete=models.SET_NULL, null=True, related_name='teachers')
-    date=models.DateTimeField()
+
     def __str__(self):
         return f"Teacher: {self.user.username}"
 
